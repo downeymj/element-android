@@ -88,6 +88,8 @@ jobs:
             ${{ runner.os }}-gradle-
       - name: Start synapse server
         run: |
+          mkdir demo
+          cd demo
           pip install matrix-synapse
           curl https://raw.githubusercontent.com/matrix-org/synapse/develop/demo/start.sh -o start.sh
           chmod 777 start.sh
@@ -245,6 +247,7 @@ jobs:
         with:
           name: integrationtest-error-results
           path: |
+            demo/8080/homeserver.log
             emulator-permalink.log
             emulator-internal.log
             emulator-ordering.log
@@ -275,6 +278,8 @@ jobs:
             ${{ runner.os }}-gradle-
       - name: Start synapse server
         run: |
+          mkdir demo
+          cd demo
           pip install matrix-synapse
           curl -sL https://raw.githubusercontent.com/matrix-org/synapse/develop/demo/start.sh \
             | sed s/127.0.0.1/0.0.0.0/g | sed 's/http:\/\/localhost/http:\/\/10.0.2.2/g' | bash -s -- --no-rate-limit
@@ -305,6 +310,7 @@ jobs:
           name: uitest-error-results
           path: |
             emulator.log
+            demo/8080/homeserver.log
             failure_screenshots/
 
   codecov-units:
